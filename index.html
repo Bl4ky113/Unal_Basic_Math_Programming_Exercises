@@ -1,11 +1,19 @@
+<!DOCTYPE html>
 <html>
 <head>
+	<meta name="author" content="Bl4ky113" />
+	<meta name="application-name" content="Justificación: Triángulo de Pascal" />
+	<meta name="description" content="Ejercicio de Justificación del Triángulo de Pascal" />
+	<meta name="keywords" content="exercise, calculator, mathemathics, pascal, pascal triangle, Universidad Nacional de Colombia, Universidad Nacional, Basic Math, Matemáticas Básicas" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Justificación: Triángulo de Pascal</title>
-	<link href="./src/css/styles.css" rel="stylesheet" type="text/css"/> 
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+	<link href="./src/css/config.css" rel="stylesheet" type="text/css" /> 
+	<link href="./src/css/styles.css" rel="stylesheet" type="text/css" /> 
+	<link href="./src/css/tablet.css" rel="stylesheet" type="text/css" media="screen and (min-width: 430px)"/> 
+	<link href="./src/css/desktop.css" rel="stylesheet" type="text/css" media="screen and (min-width: 770px)"/> 
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
 </head>
 <body>
 <div class="body-wrapper">
@@ -115,43 +123,64 @@
 			<h2>Calculadora de Triangulo de Pascal</h2>
 			<div class="inputs">
 				<input 
+					id="term1-coeficient"
+					name="term1-coeficient"
 					class="input"
 					placeholder="Coeficiente"
-					type="text" />
+					type="number" />
 				<input 
+					id="term1-variable"
+					name="term1-variable"
 					class="input"
 					placeholder="Variable"
-					type="text" />
+					type="number" />
 				<input 
+					id="term1-exponent"
+					name="term1-exponent"
 					class="input"
 					placeholder="Exponente"
-					type="text" />
+					type="number" />
 				<input 
+					id="term2-coeficient"
+					name="term2-coeficient"
 					placeholder="Coeficiente"
 					class="input"
-					type="text" />
+					type="number" />
 				<input 
+					id="term2-variable"
+					name="term2-variable"
 					class="input"
 					placeholder="Variable"
-					type="text" />
+					type="number" />
 				<input 
+					id="term2-exponent"
+					name="term2-exponent"
 					class="input"
 					placeholder="Exponente"
-					type="text" />
+					type="number" />
 				<input 
+					id="binomial-exponent"
+					name="binomial-exponent"
 					class="input input--large"
 					placeholder="Exponente Binomio"
-					type="text" />
-				<p class="expression">
-					(x + y)<sup>2</sup>
+					type="number" />
+				<p 	
+					id="binomial-preview"
+					class="expression">
+					<span>(</span>
+					<span>x</span>
+					<span>+</span>
+					<span>y</span>
+					<span>)</span>
+					<sup>2</sup>
 				</p>
-				<button class="button">
+				<button 
+					id="calc-btn"
+					class="button">
 					Calcular
 				</button>
 			</div>
-			<div class="results">
-				<p class="expression">
-				</p>
+			<div id="results-wrapper">
 			</div>
 		</section>
 	</main>
@@ -193,5 +222,6 @@
 		</section>
 	</footer>
 </div>
+<script src="./src/js/script.js"></script>
 <body>
 </html>

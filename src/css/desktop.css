@@ -1,0 +1,31 @@
+
+.body-wrapper {
+	grid-template: auto 1fr auto / 20vw 1fr 20vw;
+	grid-template-areas:
+		"header header header"
+		"b1 main b2"
+		"footer footer footer";
+}
+
+main {
+	padding: 0;
+}
+
+main article {
+	padding: 2.5rem 1rem;
+}
+
+main section {
+	padding: 2.5rem 1rem;
+}
+
+main .inputs {
+	gap: 1.5rem;
+}
+
+main .inputs .button {
+	width: auto;
+
+	padding: 1rem 3rem;
+	margin: 1rem 0;
+}

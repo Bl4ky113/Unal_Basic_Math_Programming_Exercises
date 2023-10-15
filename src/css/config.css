@@ -1,0 +1,14 @@
+:root {
+	--base: #313C74;
+
+	--dark: #182257;
+	--darker: #070F3A;
+
+	--light: #525C91;
+	--lighter: #7C84AE;
+
+	--font-white: #ffffff;
+	--font-black: #000000;
+}
+
+* { margin: 0; padding: 0; }

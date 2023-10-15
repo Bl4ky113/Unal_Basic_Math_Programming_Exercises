@@ -1,19 +1,4 @@
 
-:root {
-	--base: #313C74;
-
-	--dark: #182257;
-	--darker: #070F3A;
-
-	--light: #525C91;
-	--lighter: #7C84AE;
-
-	--font-white: #ffffff;
-	--font-black: #000000;
-}
-
-* { margin: 0; padding: 0; }
-
 body {
 	max-width: 100vw;
 	min-height: 100vh;
@@ -60,21 +45,21 @@ header p {
 }
 
 main {
-	padding: 0.5rem 1rem;
+	padding: 0.25rem;
 	grid-area: main;
 }
 
 main section {
-	padding: 1rem;
-	margin: 1.5rem 0;
+	padding: 0.5rem;
+	margin: 1rem 0;
 }
 
 main article {
-	padding: 1rem;
+	padding: 0.5rem;
 	border-top: 3px solid rgba(82, 92, 145, 0.5);
 	border-bottom: 3px solid rgba(82, 92, 145, 0.5);
 	border-radius: 1rem;
-	margin: 1.5rem 0;
+	margin: 1rem 0;
 
 	box-shadow: 0 0 15px -8px;
 }
@@ -92,10 +77,21 @@ main .text {
 }
 
 main h2 {
+	margin: 1rem 0;
+
 	color: var(--dark);
 	font: 700 1.75rem/125% 'Montserrat', sans-serif;
 	text-align: center;
 	text-align-last: center;
+}
+
+main h3 {
+	margin: 0.5rem 0;
+
+	color: var(--dark);
+	font: 700 1.5rem/110% 'Montserrat', sans-serif;
+	text-align: left;
+	text-align-last: left;
 }
 
 main .numeral {
@@ -145,6 +141,8 @@ main .expression--vertical {
 
 main .expression--vertical span {
 	padding: 0 0.25rem;
+	
+	text-align: center;
 }
 
 main .expression--vertical.expression--fraction span:nth-child(1){ 
@@ -183,6 +181,12 @@ main .inputs .input {
 	text-align-last: center;
 }
 
+main .inputs .input:focus,
+main .inputs .input:focus-visible {
+	outline: 2px solid var(--lighter);
+	outline-offset: 0.1rem;
+}
+
 main .inputs .input::placeholder {
 	color: #555;
 	font: 400 0.95rem/95% 'Montserrat', sans-serif;
@@ -204,10 +208,11 @@ main .inputs .expression {
 }
 
 main .inputs .button {
-	padding: 0.25rem 1.5rem;
+	width: 100%;
+
+	padding: 1rem 3rem;
 	border: none;
 	border-radius: 0.5rem;
-	margin: 1rem 0;
 
 	background-color: var(--base);
 
@@ -215,12 +220,30 @@ main .inputs .button {
 	font: 700 1.5rem/100% 'Montserrat', sans-serif;
 
 	grid-column: span 3;
+
+	transition: 350ms ease color;
 }
 
 main .inputs .button:active {
 	color: var(--lighter);
 }
 
+main .inputs .button:focus,
+main .inputs .button:focus-visible {
+	outline: 2px solid var(--lighter);
+	outline-offset: 0.1rem;
+}
+
+main .results {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: center;
+}
+
+main .results .expression {
+	font-size: 1.5rem;
+}
 
 footer {
 	background-color: var(--dark);

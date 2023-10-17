@@ -34,16 +34,24 @@ const convertInputNumber = (inputValue='') => {
 	return parseInt(inputValue);
 }
 
+const factorizeNum = (number=1) => {
+	if (number === 0) {
+		return 1;
+	}
+
+	return factorizeNum(number - 1) * number;
+}
+
 const updatePreview = () => {
 	const term1Sign = term1.getCoeficient() > 0 ? '' : ' - ';
 	const term2Sign = term2.getCoeficient() > 0 ? ' + ' : ' - ';
 
-	const term1Coeficient = Math.abs(term1.getCoeficient()) != 1  ? Math.abs(term1.getCoeficient()) : '';
-	const term2Coeficient = Math.abs(term2.getCoeficient()) != 1  ? Math.abs(term2.getCoeficient()) : '';
+	const term1Coeficient = Math.abs(term1.getCoeficient()) !== 1  ? Math.abs(term1.getCoeficient()) : '';
+	const term2Coeficient = Math.abs(term2.getCoeficient()) !== 1  ? Math.abs(term2.getCoeficient()) : '';
 
-	const term1Exponent = term1.getExponent() != 1 ? term1.getExponent() : '';
-	const term2Exponent = term2.getExponent() != 1 ? term2.getExponent() : '';
-	const binomialExponent = binomial.getExponent() != 1 ? binomial.getExponent() : '';
+	const term1Exponent = term1.getExponent() !== 1 ? term1.getExponent() : '';
+	const term2Exponent = term2.getExponent() !== 1 ? term2.getExponent() : '';
+	const binomialExponent = binomial.getExponent() !== 1 ? binomial.getExponent() : '';
 
 	const term1Variable = term1.variableElement.value !== '' ? `(${term1.getVariable()})`  : 'x';
 	const term2Variable = term2.variableElement.value !== '' ? `(${term2.getVariable()})`  : 'y';
@@ -67,15 +75,15 @@ const updatePreview = () => {
 
 const calculateBaseBinomial = (exponentExpression=1) => {
 	const resultBinomial = document.createElement('div');
-	resultBinomial.id = "results-binomial";
-	resultBinomial.className = "results";
-	
 	const resultTitle = document.createElement('h3');
-	resultTitle.innerText = "e"
-
 	let resultsHTMLList = "";
 
-	for (let i = 0; i <= binomial.getExponent(); i++) {
+	resultBinomial.id = "results-binomial";
+	resultBinomial.className = "results";
+
+	resultTitle.innerText = "(Binomio) ^ " + exponentExpression;
+	
+	for (let i = 0; i <= exponentExpression; i++) {
 		let resultHTML = `<p class="expression">`;
 		
 		const combinatoric = `
@@ -90,7 +98,85 @@ const calculateBaseBinomial = (exponentExpression=1) => {
 		let combinatoricSign = '+';
 
 		if ((term1Sign !== '' || term2Sign !== '') && (term1Sign !== term2Sign)) {
-			combinatoricSign = i % 2 == 0 ? '+' : '-';
+			combinatoricSign = i % 2 === 0 ? '+' : '-';
+		}
+
+		const term1Coeficient = Math.abs(term1.getCoeficient()) !== 1  ? Math.abs(term1.getCoeficient()) : '';
+		const term2Coeficient = Math.abs(term2.getCoeficient()) !== 1  ? Math.abs(term2.getCoeficient()) : '';
+
+		const term1Exponent = term1.getExponent() !== 1 ? term1.getExponent() : '';
+		const term2Exponent = term2.getExponent() !== 1 ? term2.getExponent() : '';
+
+		const term1OuterExponent = exponentExpression - i;
+		const term2OuterExponent = i;
+
+		const term1Variable = term1.variableElement.value !== '' ? `(${term1.getVariable()})`  : 'x';
+		const term2Variable = term2.variableElement.value !== '' ? `(${term2.getVariable()})`  : 'y';
+
+		if (i > 0 || combinatoricSign === '-' ) {
+			resultHTML += `<span>${combinatoricSign}</span>`;
+		}
+
+		resultHTML += `
+			<span>(</span>
+			${combinatoric}
+			<span>)</span>
+		`;
+
+		if (term1OuterExponent > 0) {
+			resultHTML += `
+				<span>(</span>
+				<span>${term1Sign}</span>
+				<span>${term1Coeficient}</span>
+				<span>${term1Variable}</span>
+				<sup>${term1Exponent}</sup>
+				<span>)</span>
+				<sup>${term1OuterExponent !== 1 ? term1OuterExponent : ''}</sup>
+			`;
+		}
+
+		if (term2OuterExponent > 0) {
+			resultHTML += `
+				<span>(</span>
+				<span>${term2Sign}</span>
+				<span>${term2Coeficient}</span>
+				<span>${term2Variable}</span>
+				<sup>${term2Exponent}</sup>
+				<span>)</span>
+				<sup>${term2OuterExponent !== 1 ? term2OuterExponent : ''}</sup>
+			`;
+		}
+
+		resultHTML += `</p>`;
+		resultsHTMLList += resultHTML;
+	}
+
+	resultBinomial.innerHTML = resultsHTMLList;
+
+	pascalResults.appendChild(resultTitle);
+	pascalResults.appendChild(resultBinomial);
+}
+
+const calculateCombinatoricBinomial = (exponentExpression) => {
+	const resultBinomial = document.createElement('div');
+	const resultSeparator = document.createElement('hr');
+
+	let resultsHTMLList = "";
+
+	resultBinomial.id = "results-binomial";
+	resultBinomial.className = "results";
+
+	for (let i = 0; i <= exponentExpression; i++) {
+		let resultHTML = `<p class="expression">`;
+		
+		const combinatoric = factorizeNum(exponentExpression) / ( factorizeNum(i) * factorizeNum( (exponentExpression - i) ) );
+
+		const term1Sign = term1.getCoeficient() > 0 ? '' : '-';
+		const term2Sign = term2.getCoeficient() > 0 ? '' : '-';
+		let combinatoricSign = '+';
+
+		if ((term1Sign !== '' || term2Sign !== '') && (term1Sign !== term2Sign)) {
+			combinatoricSign = i % 2 === 0 ? '+' : '-';
 		}
 
 		const term1Coeficient = Math.abs(term1.getCoeficient()) != 1  ? Math.abs(term1.getCoeficient()) : '';
@@ -123,7 +209,7 @@ const calculateBaseBinomial = (exponentExpression=1) => {
 				<span>${term1Variable}</span>
 				<sup>${term1Exponent}</sup>
 				<span>)</span>
-				<sup>${term1OuterExponent}</sup>
+				<sup>${term1OuterExponent !== 1 ? term1OuterExponent : ''}</sup>
 			`;
 		}
 
@@ -135,7 +221,7 @@ const calculateBaseBinomial = (exponentExpression=1) => {
 				<span>${term2Variable}</span>
 				<sup>${term2Exponent}</sup>
 				<span>)</span>
-				<sup>${term2OuterExponent}</sup>
+				<sup>${term2OuterExponent !== 1 ? term2OuterExponent : ''}</sup>
 			`;
 		}
 
@@ -144,6 +230,277 @@ const calculateBaseBinomial = (exponentExpression=1) => {
 	}
 
 	resultBinomial.innerHTML = resultsHTMLList;
+
+	pascalResults.appendChild(resultSeparator);
+	pascalResults.appendChild(resultBinomial);
+}
+
+const calculateExponentsBinomial = (exponentExpression) => {
+	const resultBinomial = document.createElement('div');
+	const resultSeparator = document.createElement('hr');
+
+	let resultsHTMLList = "";
+
+	resultBinomial.id = "results-binomial";
+	resultBinomial.className = "results";
+
+	for (let i = 0; i <= exponentExpression; i++) {
+		let resultHTML = `<p class="expression">`;
+		
+		const combinatoric = factorizeNum(exponentExpression) / ( factorizeNum(i) * factorizeNum( (exponentExpression - i) ) );
+
+		const term1OuterExponent = exponentExpression - i;
+		const term2OuterExponent = i;
+
+		const term1Sign = term1.getCoeficient() > 0 || term1OuterExponent % 2 == 0 ? '' : '-';
+		const term2Sign = term2.getCoeficient() > 0 || term2OuterExponent % 2 == 0 ? '' : '-';
+		let combinatoricSign = '+';
+
+		if ((term1Sign !== '' || term2Sign !== '') && (term1Sign !== term2Sign)) {
+			combinatoricSign = i % 2 === 0 ? '+' : '-';
+		}
+
+		const term1Coeficient = Math.abs(term1.getCoeficient()) !== 1 ? Math.abs(term1.getCoeficient()) ** term1OuterExponent : '';
+		const term2Coeficient = Math.abs(term2.getCoeficient()) !== 1 ? Math.abs(term2.getCoeficient()) ** term2OuterExponent : '';
+
+		const term1Exponent = term1.getExponent() !== 1 || term1OuterExponent !== 1 ? term1.getExponent() * term1OuterExponent : '';
+		const term2Exponent = term2.getExponent() !== 1 || term2OuterExponent !== 1 ? term2.getExponent() * term2OuterExponent : '';
+
+		const term1Variable = term1.variableElement.value !== '' ? `(${term1.getVariable()})`  : 'x';
+		const term2Variable = term2.variableElement.value !== '' ? `(${term2.getVariable()})`  : 'y';
+
+		if (i > 0 || combinatoricSign == '-' ) {
+			resultHTML += `<span>${combinatoricSign}</span>`;
+		}
+
+		resultHTML += `
+			<span>(</span>
+			${combinatoric}
+			<span>)</span>
+		`;
+
+		if (term1OuterExponent > 0) {
+			resultHTML += `
+				<span>${term1Sign}</span>
+				<span>${term1Coeficient}</span>
+				<span>${term1Variable}</span>
+				<sup>${term1Exponent}</sup>
+			`;
+		}
+
+		if (term2OuterExponent > 0) {
+			resultHTML += `
+				<span>${term2Sign}</span>
+				<span>${term2Coeficient}</span>
+				<span>${term2Variable}</span>
+				<sup>${term2Exponent}</sup>
+			`;
+		}
+
+		resultHTML += `</p>`;
+		resultsHTMLList += resultHTML;
+	}
+
+	resultBinomial.innerHTML = resultsHTMLList;
+
+	pascalResults.appendChild(resultSeparator);
+	pascalResults.appendChild(resultBinomial);
+}
+
+const calculateCoeficentsBinomial = (exponentExpression) => {
+	const resultBinomial = document.createElement('div');
+	const resultSeparator = document.createElement('hr');
+
+	let resultsHTMLList = "";
+
+	resultBinomial.id = "results-binomial";
+	resultBinomial.className = "results";
+
+	for (let i = 0; i <= exponentExpression; i++) {
+		let resultHTML = `<p class="expression">`;
+		
+		const combinatoric = factorizeNum(exponentExpression) / ( factorizeNum(i) * factorizeNum( (exponentExpression - i) ) );
+
+		const term1OuterExponent = exponentExpression - i;
+		const term2OuterExponent = i;
+
+		const term1Sign = term1.getCoeficient() > 0 || term1OuterExponent % 2 == 0 ? '' : '-';
+		const term2Sign = term2.getCoeficient() > 0 || term2OuterExponent % 2 == 0 ? '' : '-';
+		let combinatoricSign = '+';
+
+		if ((term1Sign !== '' || term2Sign !== '') && (term1Sign !== term2Sign)) {
+			combinatoricSign = i % 2 === 0 ? '+' : '-';
+		}
+
+		const term1Exponent = term1.getExponent() !== 1 || term1OuterExponent !== 1 ? term1.getExponent() * term1OuterExponent : '';
+		const term2Exponent = term2.getExponent() !== 1 || term2OuterExponent !== 1 ? term2.getExponent() * term2OuterExponent : '';
+
+		const termCoeficient = Math.abs((term1.getCoeficient() ** term1OuterExponent) * (term2.getCoeficient() ** term2OuterExponent) * combinatoric);
+
+		const term1Variable = term1.variableElement.value !== '' ? `(${term1.getVariable()})`  : 'x';
+		const term2Variable = term2.variableElement.value !== '' ? `(${term2.getVariable()})`  : 'y';
+
+		if (i > 0 || combinatoricSign == '-' ) {
+			resultHTML += `<span>${combinatoricSign}</span>`;
+		}
+
+		resultHTML += `
+			<span>${termCoeficient}</span>
+		`;
+
+		if (term1OuterExponent > 0) {
+			resultHTML += `
+				<span>${term1Variable}</span>
+				<sup>${term1Exponent}</sup>
+			`;
+		}
+
+		if (term2OuterExponent > 0) {
+			resultHTML += `
+				<span>${term2Variable}</span>
+				<sup>${term2Exponent}</sup>
+			`;
+		}
+
+		resultsHTMLList += resultHTML;
+	}
+
+	resultBinomial.innerHTML = resultsHTMLList;
+
+	pascalResults.appendChild(resultSeparator);
+	pascalResults.appendChild(resultBinomial);
+}
+
+const calculateVariablesBinomial = (exponentExpression) => {
+	if (term1.variableElement.value === '' && term2.variableElement.value === '') {
+		return;
+	}
+
+	const resultBinomial = document.createElement('div');
+	const resultSeparator = document.createElement('hr');
+
+	let resultsHTMLList = "";
+
+	resultBinomial.id = "results-binomial";
+	resultBinomial.className = "results";
+
+	for (let i = 0; i <= exponentExpression; i++) {
+		let resultHTML = `<p class="expression">`;
+		
+		const combinatoric = factorizeNum(exponentExpression) / ( factorizeNum(i) * factorizeNum( (exponentExpression - i) ) );
+
+		const term1OuterExponent = exponentExpression - i;
+		const term2OuterExponent = i;
+
+		const term1Sign = term1.getCoeficient() > 0 || term1OuterExponent % 2 == 0 ? '' : '-';
+		const term2Sign = term2.getCoeficient() > 0 || term2OuterExponent % 2 == 0 ? '' : '-';
+		let combinatoricSign = '+';
+
+		if ((term1Sign !== '' || term2Sign !== '') && (term1Sign !== term2Sign)) {
+			combinatoricSign = i % 2 === 0 ? '+' : '-';
+		}
+
+		const term1Exponent = term1.getExponent() !== 1 || term1OuterExponent !== 1 ? term1.getExponent() * term1OuterExponent : '';
+		const term2Exponent = term2.getExponent() !== 1 || term2OuterExponent !== 1 ? term2.getExponent() * term2OuterExponent : '';
+
+		let termCoeficient = Math.abs((term1.getCoeficient() ** term1OuterExponent) * (term2.getCoeficient() ** term2OuterExponent) * combinatoric);
+
+		const term1Variable = term1.variableElement.value !== '' ? term1.getVariable()  : 'x';
+		const term2Variable = term2.variableElement.value !== '' ? term2.getVariable()  : 'y';
+
+		if (term1Variable !== 'x') {
+			termCoeficient *= term1Variable ** term1Exponent;
+		}
+
+		if (term2Variable !== 'y') {
+			termCoeficient *= term2Variable ** term2Exponent;
+		}
+
+		if (i > 0 || combinatoricSign == '-' ) {
+			resultHTML += `<span>${combinatoricSign}</span>`;
+		}
+
+		resultHTML += `
+			<span>${termCoeficient}</span>
+		`;
+
+		if (term1OuterExponent > 0 && term1Variable === 'x') {
+			resultHTML += `
+				<span>${term1Variable}</span>
+				<sup>${term1Exponent}</sup>
+			`;
+		}
+
+		if (term2OuterExponent > 0 && term2Variable === 'y') {
+			resultHTML += `
+				<span>${term2Variable}</span>
+				<sup>${term2Exponent}</sup>
+			`;
+		}
+
+		resultsHTMLList += resultHTML;
+	}
+
+	resultBinomial.innerHTML = resultsHTMLList;
+
+	pascalResults.appendChild(resultSeparator);
+	pascalResults.appendChild(resultBinomial);
+}
+
+const calculateResultBinomial = (exponentExpression) => {
+	if (term1.variableElement.value === '' || term2.variableElement.value === '') {
+		return;
+	}
+
+	const resultBinomial = document.createElement('div');
+	const resultSeparator = document.createElement('hr');
+
+	let result = 0;
+
+	resultBinomial.id = "results-binomial";
+	resultBinomial.className = "results";
+
+	for (let i = 0; i <= exponentExpression; i++) {
+		const combinatoric = factorizeNum(exponentExpression) / ( factorizeNum(i) * factorizeNum( (exponentExpression - i) ) );
+		let combinatoricMultiplier = 1;
+
+		const term1OuterExponent = exponentExpression - i;
+		const term2OuterExponent = i;
+
+		const term1Exponent = term1.getExponent() !== 1 || term1OuterExponent !== 1 ? term1.getExponent() * term1OuterExponent : '';
+		const term2Exponent = term2.getExponent() !== 1 || term2OuterExponent !== 1 ? term2.getExponent() * term2OuterExponent : '';
+
+		const term1Sign = term1.getCoeficient() > 0 || term1OuterExponent % 2 == 0 ? '' : '-';
+		const term2Sign = term2.getCoeficient() > 0 || term2OuterExponent % 2 == 0 ? '' : '-';
+
+		if ((term1Sign !== '' || term2Sign !== '') && (term1Sign !== term2Sign)) {
+			combinatoricSign = i % 2 === 0 ? '+' : '-';
+		}
+
+		let termCoeficient = Math.abs((term1.getCoeficient() ** term1OuterExponent) * (term2.getCoeficient() ** term2OuterExponent) * combinatoric);
+
+		const term1Variable = term1.variableElement.value !== '' ? term1.getVariable()  : 'x';
+		const term2Variable = term2.variableElement.value !== '' ? term2.getVariable()  : 'y';
+
+		if (term1Variable !== 'x') {
+			termCoeficient *= term1Variable ** term1Exponent;
+		}
+
+		if (term2Variable !== 'y') {
+			termCoeficient *= term2Variable ** term2Exponent;
+		}
+
+		if ((term1Sign !== '' || term2Sign !== '') && (term1Sign !== term2Sign)) {
+			combinatoricMultiplier = i % 2 === 0 ? 1 : -1;
+		}
+
+		result += termCoeficient * combinatoricMultiplier;
+		console.log(termCoeficient * combinatoricMultiplier, result)
+	}
+
+	resultBinomial.innerHTML = `<p class="expression"><span>${result}</span></p>`;
+
+	pascalResults.appendChild(resultSeparator);
 	pascalResults.appendChild(resultBinomial);
 }
 
@@ -155,6 +512,11 @@ const calculateValues = () => {
 	}
 
 	calculateBaseBinomial(exponentExpression);
+	calculateCombinatoricBinomial(exponentExpression);
+	calculateExponentsBinomial(exponentExpression);
+	calculateCoeficentsBinomial(exponentExpression);
+	calculateVariablesBinomial(exponentExpression);
+	calculateResultBinomial(exponentExpression);
 }
 
 const main = () => {

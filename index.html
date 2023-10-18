@@ -85,17 +85,19 @@
 					<b>5! = 5 * 4 * 3 * 2 * 1</b>. <b>n! = n * (n - 1) * (n - 2) ... * 1</b>.
 				</p>
 				<p class="text">
-					<b>Sin embargo</b>, los grupos que tenemos que formar deben ser de un número limitado de personas que se puedan 
-					repetir en los grupos pero que tengan un orden distinto. 
+					<b>Sin embargo</b>, los grupos que tenemos que formar deben ser de un número limitado de personas y que no se repitan
+					las mismas combinaciones de personas.
+				</p>
+				<p class="text">
 					Tenemos que agregar algún tipo de limitante a la expresión <b>n!</b> para que funcione en nuestro caso.
 				</p>
 				<p class="text">
-					Para solucionar esto tenemos que mirar las <b>Permutaciones</b>. Qué son las diferentes formas en las 
+					Para solucionar esto tenemos que mirar las <b>Permutaciones</b>. Qué son el número de las diferentes formas en las 
 					que se puede reorganizar los contenidos de un conjunto.
 				</p>
 				<p class="text">
 					Vamos a mirar y usar las permutaciones de un valor <b>k</b> de un valor <b>n</b>. 
-					La cual nos permite mirar secuencias sin repetición. Es la organización de un subgrupo de k-elementos 
+					La cual nos permite mirar secuencias sin repetición. Es las organizaciones de tuplas de k-elementos 
 					en un n-grupo. Y el número de k-permutaciones del n-grupo se puede denotar cómo <b>P(n,k)</b> qué es igual a:
 				</p>
 				<p class="expression">
@@ -113,8 +115,8 @@
 							<span>(n - k)!</span>
 						</span>
 					</span>
-					Lo cual nos va a dar la cantidad de grupos con k elemetos que se pueden hacer del grupo n pero sin 
-					repetir los valores de este.
+					Lo cual nos va a dar la cantidad de tuplas con k elemetos que se pueden hacer del grupo n pero <b>sin 
+					tener en cuenta las combinaciones de los valores en las tuplas formadas</b>.
 				</p>
 				<p class="text">
 					Curiosamente tambien podemos convertir nuestra notación de fraccionario, obteniendo las 
@@ -142,17 +144,14 @@
 					</span>
 				</p>
 				<p class="text">
-					Pero esta información no puede ayudar a mirar que para limitar nuestra <b>n!</b> inicial podemos usar
-					las Permutaciones para limitarla.
+					Hasta ahora podemos limitar hasta cierto punto nuestros grupos con la Permutación, pero en algunas de <b>las tuplas que 
+					cuenta la permutación se repite los valores pero en diferentes posiciones</b>.
 				</p>
 				<p class="text">
-					Lo que necesitamos es que los k-elementos de las k-permutaciones de un n-grupo no esten organizados, y 
-					para lograr esto podemos irnos a las <b>Combinaciones</b> que es exactamente este resultado se denotan 
-					de la siguente forma <b>C(n, k)</b> para las k-combinaciones de un n-grupo.
-				</p>
-				<p class="text">
-					Estas combinaciones se obtienen, al agregar (?), o dividir a la permutación por la factorización 
-					del tamaño de los grupos:
+					Para limitar esto, vamos a tener que agregarle un limitante a los resultados que se estan obteniendo del conteo de las tuplas.
+					Para eso, vamos a filtrar las tuplas que repitan la misma combinación de elementos. Y eso se hace con las <b>Combinatorias</b>
+					Una forma sencilla de filtrar estos valores es simplemente dividir el conteo de las tuplas por el factorial del número de elementos
+					por grupo. Lo cual se puede denotar como:
 				</p>
 				<p class="expression">
 					C(n,k)
@@ -166,18 +165,17 @@
 						<span>n!</span>
 						<span>(n - k)! * k!</span>
 					</span>
-				</p>
-				<p class="text">
-					Esta ultima expresión que hemos obtenido también se le conoce cómo <b>Coeficiente Binomial</b>.
-					Tiene la siguente notación:
 					<span class="expression">
 						<span class="expression--vertical">
 							<span>n</span>
 							<span>k</span>
 						</span>
 					</span>
-					<b>Misma notación con la cual se puede expresar la cantidad de sub-grupos no repetidos y no organizados 
-					de un grupo de personas.</b>
+				</p>
+				<p class="text">
+					Esta ultima expresión que hemos obtenido también se le conoce cómo <b>Coeficiente Binomial</b>.
+					<b>Misma notación con la cual se puede expresar la cantidad de sub-grupos no repetidos y 
+					que estos subgrupos no tengan la misma combinación de elementos pero en diferente ordern.</b>
 				</p>
 			</div>
 		</article>

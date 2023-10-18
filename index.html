@@ -106,6 +106,83 @@
 				</p>
 			</div>
 			<div class="answer">
+				<p class="text">
+					Sencillo, si resolvemos la combinatoria con su formula: 
+				</p>
+				<p class="expression">
+					(
+					<span class="expression--vertical">
+						<span>n</span>
+						<span>k</span>
+					</span>
+					)
+					=
+					<span class="expression--vertical expression--fraction">
+						<span>n!</span>
+						<span>(n - k)! * k!</span>
+					</span>
+				</p>
+				<p class="text">
+					El divisor en ambos casos va a ser igual al denominador, 
+					dando cómo resultado de la división <b>1</b>.
+				</p>
+				<p class="text">
+					En el caso de que <b>k = 0</b>. En el divisor, en el parentesís, se restaría <b>0</b> a <b>n</b> quedando solo <b>n!</b>.
+					Y cómo <b>k = 0</b>, la factorización de <b>0!</b> es igual a <b>1</b>, es decír no tendría ningúna influencia en
+					la división.
+				</p>
+				<p class="text">
+					Dejando tanto en el divisor como el numerador <b>n!</b>, él cual se divide dando como resultado <b>1</b>.
+				</p>
+				<p class="expression">
+					(
+					<span class="expression--vertical">
+						<span>n</span>
+						<span>0</span>
+					</span>
+					)
+					=
+					<span class="expression--vertical expression--fraction">
+						<span>n!</span>
+						<span>(n - 0)! * 0!</span>
+					</span>
+					=
+					<span class="expression--vertical expression--fraction">
+						<span>n!</span>
+						<span>n!</span>
+					</span>
+					=
+					1
+				</p>
+				<p class="text">
+					En el caso de que <b>k = n</b>. En el divisor el parentesís se canselaría dejando solo <b>0!</b>. 
+					Y cómo <b>k = n</b>, solo quedaríá en el divisor <b>n!</b>, otra vez, dando como resultado de la división 1.
+				</p>
+				<p class="expression">
+					(
+					<span class="expression--vertical">
+						<span>n</span>
+						<span>n</span>
+					</span>
+					)
+					=
+					<span class="expression--vertical expression--fraction">
+						<span>n!</span>
+						<span>(n - n)! * n!</span>
+					</span>
+					=
+					<span class="expression--vertical expression--fraction">
+						<span>n!</span>
+						<span>0! * n!</span>
+					</span>
+					=
+					<span class="expression--vertical expression--fraction">
+						<span>n!</span>
+						<span>n!</span>
+					</span>
+					=
+					1
+				</p>
 			</div>
 		</article>
 		<article>

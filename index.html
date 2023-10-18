@@ -56,6 +56,129 @@
 				</p>
 			</div>
 			<div class="answer">
+				<p class="text">
+					En esta situación tenemos que obtener la cantidad de sub-grupos que se puedan hacer de un grupo de personas, <b>n</b> 
+					que tengan cierta cantidad de personas, <b>k</b>, en los sub-grupos. En estos subgrupos se <b>ASUME</b> que pueden 
+					ir los mismos participantes pero con diferente orden.
+				</p>
+				<p class="text">
+					Se podría empezar a mirar que tipos de combinaciones de grupos se podrían tomar apartir de <b>n</b> personas.
+					Siguiendo el siguiente algoritmo.
+				</p>
+				<p class="text">
+					Primero cuento cuantas personas puedo elegir, tomo una persona, vuelvo a contar las personas 
+					restantes y vuelvo a tomar otra persona. Esto hasta que no tengamos más personas que elegir u contar.
+				</p>
+				<p class="text">
+					Si miro los datos que tome, si tuvieramos un grupo de <b>5</b> personas, al inicio habrían <b>5</b> personas, 
+					despúes <b>4</b>, <b>3</b> y así hasta <b>0</b>. Y si vuelvo a intentar formar los grupos posibles con ordenes diferentes de personas.
+					Cada persona de las que tengamos que escoger multiplica las posibilidades de los posibles grupos por el núevo 
+					número de personas a elegir.
+				</p>
+				<p class="expression">
+					// Teniendo un grupo de 5 personas <br>
+					Número_Grupos_Posibles = 5 * 4 * 3 * 2 * 1 <br>
+					&gt;&gt; Número_Grupos_Posibles: 125
+				</p>
+				<p class="text">
+					Este tipo de operaciones se pueden expresar con la notación de factorización <b>5! = 125</b>.
+					<b>5! = 5 * 4 * 3 * 2 * 1</b>. <b>n! = n * (n - 1) * (n - 2) ... * 1</b>.
+				</p>
+				<p class="text">
+					<b>Sin embargo</b>, los grupos que tenemos que formar deben ser de un número limitado de personas que se puedan 
+					repetir en los grupos pero que tengan un orden distinto. 
+					Tenemos que agregar algún tipo de limitante a la expresión <b>n!</b> para que funcione en nuestro caso.
+				</p>
+				<p class="text">
+					Para solucionar esto tenemos que mirar las <b>Permutaciones</b>. Qué son las diferentes formas en las 
+					que se puede reorganizar los contenidos de un conjunto.
+				</p>
+				<p class="text">
+					Vamos a mirar y usar las permutaciones de un valor <b>k</b> de un valor <b>n</b>. 
+					La cual nos permite mirar secuencias sin repetición. Es la organización de un subgrupo de k-elementos 
+					en un n-grupo. Y el número de k-permutaciones del n-grupo se puede denotar cómo <b>P(n,k)</b> qué es igual a:
+				</p>
+				<p class="expression">
+					P(n,k) = n * (n - 1) * (n - 2) ... (n - k + 1)
+				</p>
+				<p class="text">
+					Siendo n factorizada k veces y sí k llegara a ser mayor a n, las permutaciones de k serían 0. 
+				</p>
+				<p class="text">
+					La cual también puede ser denotada cómo: 
+					<span class="expression">
+						P(n,k)=
+						<span class="expression--vertical expression--fraction">
+							<span>n!</span>
+							<span>(n - k)!</span>
+						</span>
+					</span>
+					Lo cual nos va a dar la cantidad de grupos con k elemetos que se pueden hacer del grupo n pero sin 
+					repetir los valores de este.
+				</p>
+				<p class="text">
+					Curiosamente tambien podemos convertir nuestra notación de fraccionario, obteniendo las 
+					n-permutaciones del n-grupo que denotaríamos como <b>P(n,n)</b>. Aunque quede un poco recursivamente-inútil,
+					siempre se obtendría:
+					<span class="expression">
+						P(n,n)
+						=
+						<span class="expression--vertical expression--fraction">
+							<span>n!</span>
+							<span>(n - n)!</span>
+						</span>
+						=
+						<span class="expression--vertical expression--fraction">
+							<span>n!</span>
+							<span>0!</span>
+						</span>
+						=
+						<span class="expression--vertical expression--fraction">
+							<span>n!</span>
+							<span>1</span>
+						</span>
+						=
+						n!
+					</span>
+				</p>
+				<p class="text">
+					Pero esta información no puede ayudar a mirar que para limitar nuestra <b>n!</b> inicial podemos usar
+					las Permutaciones para limitarla.
+				</p>
+				<p class="text">
+					Lo que necesitamos es que los k-elementos de las k-permutaciones de un n-grupo no esten organizados, y 
+					para lograr esto podemos irnos a las <b>Combinaciones</b> que es exactamente este resultado se denotan 
+					de la siguente forma <b>C(n, k)</b> para las k-combinaciones de un n-grupo.
+				</p>
+				<p class="text">
+					Estas combinaciones se obtienen, al agregar (?), o dividir a la permutación por la factorización 
+					del tamaño de los grupos:
+				</p>
+				<p class="expression">
+					C(n,k)
+					=
+					<span class="expression--vertical expression--fraction">
+						<span>P(n,k)</span>
+						<span>P(k,k)</span>
+					</span>
+					=
+					<span class="expression--vertical expression--fraction">
+						<span>n!</span>
+						<span>(n - k)! * k!</span>
+					</span>
+				</p>
+				<p class="text">
+					Esta ultima expresión que hemos obtenido también se le conoce cómo <b>Coeficiente Binomial</b>.
+					Tiene la siguente notación:
+					<span class="expression">
+						<span class="expression--vertical">
+							<span>n</span>
+							<span>k</span>
+						</span>
+					</span>
+					<b>Misma notación con la cual se puede expresar la cantidad de sub-grupos no repetidos y no organizados 
+					de un grupo de personas.</b>
+				</p>
 			</div>
 		</article>
 		<article>
